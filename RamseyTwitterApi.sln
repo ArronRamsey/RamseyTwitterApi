@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RamseyTwitterApi", "RamseyTwitterApi\RamseyTwitterApi.csproj", "{AF9C38ED-A358-4C6B-AD3D-FD122759D413}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{B5F1B0A8-98D6-483F-95C2-24998433E4E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF9C38ED-A358-4C6B-AD3D-FD122759D413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9C38ED-A358-4C6B-AD3D-FD122759D413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9C38ED-A358-4C6B-AD3D-FD122759D413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9C38ED-A358-4C6B-AD3D-FD122759D413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5F1B0A8-98D6-483F-95C2-24998433E4E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5F1B0A8-98D6-483F-95C2-24998433E4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5F1B0A8-98D6-483F-95C2-24998433E4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5F1B0A8-98D6-483F-95C2-24998433E4E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4119AE98-CBC3-4782-96FE-269D3838F749}
+	EndGlobalSection
+EndGlobal
