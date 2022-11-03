@@ -11,8 +11,9 @@ namespace Core.Services.Implementations
                 return _TweetCount;
             }
         }
-        private IDateTimeService DateTimeService { get; }
         private int _TweetCount { get; set; }
+
+        private IDateTimeService DateTimeService { get; }
         private DateTime? StartDate { get; set; }
 
         public TweetService(IDateTimeService dateTimeService)
