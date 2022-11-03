@@ -1,6 +1,8 @@
 using Core;
 using Core.Services.Implementations;
 using Core.Services.Interfaces;
+using Infrastructure.Services.Implementations;
+using Infrastructure.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection("Options"));
 builder.Services.AddSingleton<ISettingService, SettingService>();
-builder.Services.AddSingleton<IDateTimeService, IDateTimeService>();
+builder.Services.AddSingleton<IDateTimeService, DateTimeService>();
+builder.Services.AddSingleton<ITwitterApiService, TwitterApiService>();
 
 var app = builder.Build();
 
