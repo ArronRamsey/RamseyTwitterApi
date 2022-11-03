@@ -1,4 +1,4 @@
-﻿using Core.Interfaces;
+﻿using Core.Services.Interfaces;
 using Infrastructure.Services.Interfaces;
 using Tweetinvi;
 using Tweetinvi.Models;

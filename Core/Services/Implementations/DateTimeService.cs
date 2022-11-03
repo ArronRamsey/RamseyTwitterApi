@@ -1,6 +1,6 @@
-﻿using Core.Interfaces;
+﻿using Core.Services.Interfaces;
 
-namespace Core.Implementations
+namespace Core.Services.Implementations
 {
     internal class DateTimeService : IDateTimeService
     {

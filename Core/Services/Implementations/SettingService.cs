@@ -1,7 +1,7 @@
-﻿using Core.Interfaces;
+﻿using Core.Services.Interfaces;
 using Microsoft.Extensions.Options;
 
-namespace Core.Implementations
+namespace Core.Services.Implementations
 {
     public class SettingService : ISettingService
     {
