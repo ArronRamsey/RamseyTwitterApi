@@ -1,10 +1,9 @@
-﻿
-using Tweetinvi.Streaming.V2;
-
-namespace Infrastructure.Services.Interfaces
+﻿namespace Infrastructure.Services.Interfaces
 {
     public interface ITwitterApiService
     {
-        ISampleStreamV2 GetStream();
+        event EventHandler TweetReceived;
+        void Connect();
+        void Disconnect();
     }
 }

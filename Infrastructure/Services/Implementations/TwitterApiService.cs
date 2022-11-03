@@ -8,14 +8,43 @@ namespace Infrastructure.Services.Implementations
 {
     public class TwitterApiService : ITwitterApiService
     {
+        public event EventHandler? TweetReceived;
         private ISettingService settingService { get; }
+        private ISampleStreamV2 Stream { 
+            get
+            {
+                if (Stream == null)
+                {
+                    Stream =  GetStream();
+                }
+                return Stream;
+            }
+            set
+            {
+                Stream = value;
+            } 
+        }
 
         public TwitterApiService(ISettingService settings)
         {
             settingService = settings;
         }
 
-        public ISampleStreamV2 GetStream()
+        public void Connect()
+        {
+            Stream.TweetReceived += (sender, eventArgs) =>
+            {
+                TweetReceived?.Invoke(this, new EventArgs());
+            }; 
+            Stream.StartAsync();
+        }
+
+        public void Disconnect()
+        {
+            Stream.StopStream();
+        }
+
+        private ISampleStreamV2 GetStream()
         {
             return new TwitterClient(GetCredentials()).StreamsV2.CreateSampleStream();
         }
@@ -29,5 +58,6 @@ namespace Infrastructure.Services.Implementations
                 ConsumerSecret = settingService.GetSettings().ConsumerSecret
             };
         }
+
     }
 }
