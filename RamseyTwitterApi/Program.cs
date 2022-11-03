@@ -11,7 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection("Options"));
-builder.Services.AddTransient<ISettingService, SettingService>();
+builder.Services.AddSingleton<ISettingService, SettingService>();
+builder.Services.AddSingleton<IDateTimeService, IDateTimeService>();
 
 var app = builder.Build();
 
