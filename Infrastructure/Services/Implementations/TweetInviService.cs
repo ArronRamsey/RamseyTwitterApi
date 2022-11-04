@@ -8,7 +8,8 @@ namespace Infrastructure.Services.Implementations
 {
     public class TweetInviService : ITwitterApiService
     {
-        public event EventHandler? TweetReceived;
+        public event ITwitterApiService.ReceivedTweet? TweetReceived;
+       
         private ISettingService settingService { get; }
         private ISampleStreamV2 Stream { 
             get
@@ -34,7 +35,7 @@ namespace Infrastructure.Services.Implementations
         {
             Stream.TweetReceived += (sender, eventArgs) =>
             {
-                TweetReceived?.Invoke(this, new EventArgs());
+                TweetReceived?.Invoke();
             }; 
             Stream.StartAsync();
         }

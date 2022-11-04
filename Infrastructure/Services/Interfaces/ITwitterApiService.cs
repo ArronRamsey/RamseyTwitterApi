@@ -2,7 +2,8 @@
 {
     public interface ITwitterApiService
     {
-        event EventHandler TweetReceived;
+        delegate void ReceivedTweet();
+        event ReceivedTweet? TweetReceived;
         void Connect();
         void Disconnect();
     }
