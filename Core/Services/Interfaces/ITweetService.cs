@@ -2,6 +2,7 @@
 {
     public interface ITweetService
     {
+        int TweetCount { get; }
         double GetTweetsPerMinute();
         void TweetReceived();
     }
