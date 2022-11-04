@@ -1,9 +1,8 @@
 ﻿using Core.Services.Implementations;
 using Core.Services.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 
-namespace Tests.Services
+namespace Tests.Core.Services
 {
     [TestClass]
     public class TweetServiceTests
@@ -33,9 +32,11 @@ namespace Tests.Services
             dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 00, 00));
             var service = new TweetService(dateTime);
             service.TweetReceived();
-            dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 01, 00));
+            service.TweetReceived();
+            service.TweetReceived();
+            dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 02, 00));
             var tpm = service.GetTweetsPerMinute();
-            Assert.AreEqual(1, tpm);
+            Assert.AreEqual(1.5, tpm);
         }
     }
 }

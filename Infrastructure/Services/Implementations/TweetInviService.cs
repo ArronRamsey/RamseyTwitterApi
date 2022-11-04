@@ -6,7 +6,7 @@ using Tweetinvi.Streaming.V2;
 
 namespace Infrastructure.Services.Implementations
 {
-    public class TwitterApiService : ITwitterApiService
+    public class TweetInviService : ITwitterApiService
     {
         public event EventHandler? TweetReceived;
         private ISettingService settingService { get; }
@@ -25,7 +25,7 @@ namespace Infrastructure.Services.Implementations
             } 
         }
 
-        public TwitterApiService(ISettingService settings)
+        public TweetInviService(ISettingService settings)
         {
             settingService = settings;
         }
