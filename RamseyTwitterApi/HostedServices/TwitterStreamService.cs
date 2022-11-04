@@ -1,6 +1,5 @@
 ﻿using Core.Services.Interfaces;
 using Infrastructure.Services.Interfaces;
-using System.Runtime.CompilerServices;
 
 namespace RamseyTwitterApi.HostedServices
 {
@@ -31,7 +30,7 @@ namespace RamseyTwitterApi.HostedServices
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            //ApiService.Disconnect();
+            ApiService.Disconnect();
             Log.LogWarning("TwitterStreamService_StopAsync");
             Log.LogWarning($"Tweet Count: {TweetService.TweetCount}");
             Log.LogWarning($"Tweets Per Minute: {TweetService.GetTweetsPerMinute()}");
