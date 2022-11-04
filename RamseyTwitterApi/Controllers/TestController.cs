@@ -1,4 +1,5 @@
-﻿using Infrastructure.Services.Interfaces;
+﻿using Core.Services.Interfaces;
+using Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RamseyTwitterApi.Controllers
@@ -7,17 +8,17 @@ namespace RamseyTwitterApi.Controllers
     [Route("[controller]")]
     public class TestController : ControllerBase
     {
-        private ITwitterApiService apiService { get; }
+        private ITweetService apiService { get; }
         
-        public TestController(ITwitterApiService twitterApiService )
+        public TestController(ITweetService tweetService)
         {
-            apiService = twitterApiService;
+            apiService = tweetService;
         }
 
         [HttpGet]
-        public void TestConnect()
+        public int TestConnect()
         {
-            apiService.Connect();
+            return apiService.TweetCount;
         }
     }
 }

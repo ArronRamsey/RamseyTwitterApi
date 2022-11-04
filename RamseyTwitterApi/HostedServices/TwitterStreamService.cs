@@ -1,7 +1,8 @@
 ﻿using Core.Services.Interfaces;
 using Infrastructure.Services.Interfaces;
+using System.Runtime.CompilerServices;
 
-namespace RamseyTwitterApi.Workers
+namespace RamseyTwitterApi.HostedServices
 {
     public class TwitterStreamService : IHostedService
     {
@@ -16,22 +17,24 @@ namespace RamseyTwitterApi.Workers
             Log = log;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
+
             ApiService.TweetReceived += () =>
             {
                 TweetService.TweetReceived();
             };
-            await Task.Run(() => ApiService.Connect());
-            Log.LogInformation("TwitterStreamService_StartAsync");
+            Task.Run(() => ApiService.Connect());
+            Log.LogWarning("TwitterStreamService_StartAsync");
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            ApiService.Disconnect();
-            Log.LogInformation("TwitterStreamService_StartAsync");
-            Log.LogInformation($"Tweet Count: {TweetService.TweetCount}");
-            Log.LogInformation($"Tweets Per Minute: {TweetService.GetTweetsPerMinute()}");
+            //ApiService.Disconnect();
+            Log.LogWarning("TwitterStreamService_StopAsync");
+            Log.LogWarning($"Tweet Count: {TweetService.TweetCount}");
+            Log.LogWarning($"Tweets Per Minute: {TweetService.GetTweetsPerMinute()}");
             return Task.CompletedTask;
         }
     }
