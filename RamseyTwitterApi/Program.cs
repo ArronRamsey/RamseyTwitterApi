@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection("Options"));
 builder.Services.AddSingleton<ISettingService, SettingService>();
 builder.Services.AddSingleton<IDateTimeService, DateTimeService>();
-builder.Services.AddSingleton<ITwitterApiService, TwitterApiService>();
+builder.Services.AddSingleton<ITwitterApiService, TweetInviService>();
 
 var app = builder.Build();
 
