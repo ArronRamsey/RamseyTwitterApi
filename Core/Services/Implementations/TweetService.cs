@@ -27,8 +27,8 @@ namespace Core.Services.Implementations
         private ILogger<TweetService> Log { get; }
         private IThreadingService ThreadService { get; }
 
-        private CancellationTokenSource LoggingTaskCancelSource { get; }
-        private CancellationToken LoggingToken { get; }
+        private CancellationTokenSource LoggingTaskCancelSource { get; set; }
+        private CancellationToken LoggingToken { get; set; }
 
         public TweetService(IDateTimeService dateTimeService, ILogger<TweetService> logger, IThreadingService threadingService)
         {
@@ -59,6 +59,12 @@ namespace Core.Services.Implementations
 
         public void StartWriteLogAsync()
         {
+            if (LoggingToken.IsCancellationRequested)
+            {
+                //We cancelled the task.  Need to re-initialize
+                LoggingTaskCancelSource = new CancellationTokenSource();
+                LoggingToken = LoggingTaskCancelSource.Token;
+            }
             Task.Run(() => LogInfo(), LoggingToken);
         }
 
