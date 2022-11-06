@@ -1,4 +1,5 @@
-﻿using Core.Services.Interfaces;
+﻿using Core.Dtos;
+using Core.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Services.Implementations
@@ -48,7 +49,7 @@ namespace Core.Services.Implementations
             return _TweetCount / DateTimeService.Now().Subtract(Convert.ToDateTime(StartDate)).TotalMinutes;
         }
 
-        public void TweetReceived()
+        public void TweetReceived(TweetDto dto)
         {
             if (StartDate == null)
             {
