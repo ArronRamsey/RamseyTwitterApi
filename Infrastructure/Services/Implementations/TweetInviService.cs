@@ -11,32 +11,16 @@ namespace Infrastructure.Services.Implementations
         public event ITwitterApiService.ReceivedTweet? TweetReceived;
        
         private ISettingService settingService { get; }
-        private ISampleStreamV2 Stream { 
-            get
-            {
-                if (Stream == null)
-                {
-                    Stream =  GetStream();
-                }
-                return Stream;
-            }
-            set
-            {
-                Stream = value;
-            } 
-        }
+        private ISampleStreamV2 Stream { get; }
 
         public TweetInviService(ISettingService settings)
         {
             settingService = settings;
+            Stream = GetStream();
         }
 
         public void Connect()
         {
-            Stream.TweetReceived += (sender, eventArgs) =>
-            {
-                TweetReceived?.Invoke();
-            }; 
             Stream.StartAsync();
         }
 
@@ -47,17 +31,18 @@ namespace Infrastructure.Services.Implementations
 
         private ISampleStreamV2 GetStream()
         {
-            return new TwitterClient(GetCredentials()).StreamsV2.CreateSampleStream();
-        }
-
-        private ConsumerOnlyCredentials GetCredentials()
-        {
-            return new ConsumerOnlyCredentials()
+            var credentials = new ConsumerOnlyCredentials()
             {
                 BearerToken = settingService.GetSettings().BearerToken,
                 ConsumerKey = settingService.GetSettings().ConsumerKey,
                 ConsumerSecret = settingService.GetSettings().ConsumerSecret
             };
+            var sampledStream = new TwitterClient(credentials).StreamsV2.CreateSampleStream();
+            sampledStream.TweetReceived += (sender, eventArgs) =>
+            {
+                TweetReceived?.Invoke();
+            };
+            return sampledStream;
         }
 
     }
