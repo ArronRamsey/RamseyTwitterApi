@@ -3,13 +3,13 @@ using Infrastructure.Services.Interfaces;
 
 namespace RamseyTwitterApi.HostedServices
 {
-    public class TwitterStreamService : IHostedService
+    public class TwitterStreamHostedService : IHostedService
     {
         private ITwitterApiService ApiService { get; }
         private ITweetService TweetService { get; }
-        private ILogger<TwitterStreamService> Log;
+        private ILogger<TwitterStreamHostedService> Log { get; }
 
-        public TwitterStreamService(ITwitterApiService twitterApiService, ITweetService tweetService, ILogger<TwitterStreamService> log)
+        public TwitterStreamHostedService(ITwitterApiService twitterApiService, ITweetService tweetService, ILogger<TwitterStreamHostedService> log)
         {
             ApiService = twitterApiService;
             TweetService = tweetService;
@@ -18,7 +18,6 @@ namespace RamseyTwitterApi.HostedServices
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-
             ApiService.TweetReceived += () =>
             {
                 TweetService.TweetReceived();

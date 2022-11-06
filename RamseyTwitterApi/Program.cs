@@ -17,7 +17,7 @@ builder.Services.AddSingleton<ISettingService, SettingService>();
 builder.Services.AddSingleton<IDateTimeService, DateTimeService>();
 builder.Services.AddSingleton<ITwitterApiService, FakeApiService>();
 builder.Services.AddSingleton<ITweetService, TweetService>();
-builder.Services.AddHostedService<TwitterStreamService>();
+builder.Services.AddHostedService<TwitterStreamHostedService>();
 
 var app = builder.Build();
 
