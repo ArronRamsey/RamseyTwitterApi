@@ -3,7 +3,9 @@
     public interface ITweetService
     {
         int TweetCount { get; }
-        double GetTweetsPerMinute();
+        double TweetsPerMinute { get; }
         void TweetReceived();
+        void StartWriteLogAsync();
+        void StopWriteLogAsync();
     }
 }

@@ -30,9 +30,8 @@ namespace RamseyTwitterApi.HostedServices
         public Task StopAsync(CancellationToken cancellationToken)
         {
             ApiService.Disconnect();
-            Log.LogWarning("TwitterStreamService_StopAsync");
-            Log.LogWarning($"Tweet Count: {TweetService.TweetCount}");
-            Log.LogWarning($"Tweets Per Minute: {TweetService.GetTweetsPerMinute()}");
+            Log.LogWarning($"Final Tweet Count: {TweetService.TweetCount}");
+            Log.LogWarning($"Final Tweets Per Minute: {TweetService.TweetsPerMinute}");
             return Task.CompletedTask;
         }
     }

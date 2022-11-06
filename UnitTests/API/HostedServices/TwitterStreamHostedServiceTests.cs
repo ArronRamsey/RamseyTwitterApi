@@ -11,22 +11,6 @@ namespace UnitTests.API.HostedServices
     public class TwitterStreamHostedServiceTests
     {
         [TestMethod]
-        public void StartAsync_TweetService_TweetReceivedCalledViaEvent()
-        {
-            //var apiService = Substitute.For<ITwitterApiService>();
-            //var tweetService = Substitute.For<ITweetService>();
-            //var logger = Substitute.For<ILogger<TwitterStreamHostedService>>();
-            //var service = new TwitterStreamHostedService(apiService, tweetService, logger);
-            //apiService.When(x => x.Connect()).Do(y => apiService.TweetReceived += Raise.Event<ReceivedTweet>());
-            ////var wasCalled = false;
-            ////apiService.TweetReceived += () => wasCalled = true;
-            ////apiService.TweetReceived += Raise.Event<ReceivedTweet>();
-            //service.StartAsync(new CancellationToken());
-            //tweetService.Received().TweetReceived();
-            ////Assert.IsTrue(wasCalled);
-        }
-
-        [TestMethod]
         public void StartAsync_ConnectCalled()
         {
             var apiService = Substitute.For<ITwitterApiService>();
@@ -78,7 +62,7 @@ namespace UnitTests.API.HostedServices
             var logger = Substitute.For<ILogger<TwitterStreamHostedService>>();
             var service = new TwitterStreamHostedService(apiService, tweetService, logger);
             service.StopAsync(new CancellationToken());
-            Assert.AreEqual(3, logger.ReceivedCalls().Count());
+            Assert.AreEqual(2, logger.ReceivedCalls().Count());
         }
 
         [TestMethod]

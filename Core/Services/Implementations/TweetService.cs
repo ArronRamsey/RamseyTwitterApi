@@ -1,4 +1,5 @@
 ﻿using Core.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Core.Services.Implementations
 {
@@ -13,12 +14,29 @@ namespace Core.Services.Implementations
         }
         private int _TweetCount { get; set; }
 
-        private IDateTimeService DateTimeService { get; }
+        public double TweetsPerMinute
+        {
+            get
+            {
+                return GetTweetsPerMinute();
+            }
+        }
         private DateTime? StartDate { get; set; }
 
-        public TweetService(IDateTimeService dateTimeService)
+        private IDateTimeService DateTimeService { get; }
+        private ILogger<TweetService> Log { get; }
+        private IThreadingService ThreadService { get; }
+
+        private CancellationTokenSource LoggingTaskCancelSource { get; }
+        private CancellationToken LoggingToken { get; }
+
+        public TweetService(IDateTimeService dateTimeService, ILogger<TweetService> logger, IThreadingService threadingService)
         {
             DateTimeService = dateTimeService;
+            Log = logger;
+            ThreadService = threadingService;
+            LoggingTaskCancelSource = new CancellationTokenSource();
+            LoggingToken = LoggingTaskCancelSource.Token;
         }
 
         public double GetTweetsPerMinute()
@@ -38,5 +56,27 @@ namespace Core.Services.Implementations
             }
             _TweetCount += 1;
         }
+
+        public void StartWriteLogAsync()
+        {
+            Task.Run(() => LogInfo(), LoggingToken);
+        }
+
+        public void StopWriteLogAsync()
+        {
+            LoggingTaskCancelSource.Cancel();
+            Log.LogWarning("TweetService_LogWritingTaskCancelled");
+        }
+
+        private void LogInfo()
+        {
+            while (!LoggingToken.IsCancellationRequested)
+            {
+                Log.LogWarning($"Tweet Count: {TweetCount}");
+                Log.LogWarning($"Tweets Per Minute: {TweetsPerMinute}");
+                ThreadService.Sleep(2000);
+            }
+        }
+
     }
 }

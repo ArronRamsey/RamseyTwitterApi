@@ -21,7 +21,7 @@ namespace UnitTests.API.HostedServices
         {
             var tweetService = Substitute.For<ITweetService>();
             var hostedService = new TweetLoggerHostedService(tweetService);
-            hostedService.StartAsync(new CancellationToken(false));
+            hostedService.StopAsync(new CancellationToken(false));
             tweetService.Received().StopWriteLogAsync();
         }
 
