@@ -1,5 +1,4 @@
-﻿using Core.Dtos;
-using Core.Services.Interfaces;
+﻿using Core.Services.Interfaces;
 using Infrastructure.Services.Interfaces;
 using Tweetinvi;
 using Tweetinvi.Models;
@@ -41,7 +40,7 @@ namespace Infrastructure.Services.Implementations
             var sampledStream = new TwitterClient(credentials).StreamsV2.CreateSampleStream();
             sampledStream.TweetReceived += (sender, eventArgs) =>
             {
-                TweetReceived?.Invoke(new TweetDto(eventArgs.Tweet.Text, eventArgs.Tweet.AuthorId));
+                TweetReceived?.Invoke();
             };
             return sampledStream;
         }

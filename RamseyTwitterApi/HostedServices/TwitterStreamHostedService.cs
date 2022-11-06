@@ -18,9 +18,9 @@ namespace RamseyTwitterApi.HostedServices
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            ApiService.TweetReceived += (dto) =>
+            ApiService.TweetReceived += () =>
             {
-                TweetService.TweetReceived(dto);
+                TweetService.TweetReceived();
             };
             Task.Run(() => ApiService.Connect());
             Log.LogWarning("TwitterStreamService_StartAsync");

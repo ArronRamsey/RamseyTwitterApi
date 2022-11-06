@@ -3,7 +3,6 @@ using Core.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using UnitTests;
-using Core.Dtos;
 
 namespace Tests.Core.Services
 {
@@ -18,7 +17,7 @@ namespace Tests.Core.Services
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var service = new TweetService(dateTime, logger, threadService);
-            service.TweetReceived(new TweetDto("Text", "Id"));
+            service.TweetReceived();
             Assert.AreEqual(1, service.TweetCount);
         }
 
@@ -41,9 +40,9 @@ namespace Tests.Core.Services
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var service = new TweetService(dateTime, logger, threadService);
-            service.TweetReceived(new TweetDto("Text", "Id"));
-            service.TweetReceived(new TweetDto("Text", "Id"));
-            service.TweetReceived(new TweetDto("Text", "Id"));
+            service.TweetReceived();
+            service.TweetReceived();
+            service.TweetReceived();
             dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 02, 00));
             var tpm = service.GetTweetsPerMinute();
             Assert.AreEqual(1.5, tpm);

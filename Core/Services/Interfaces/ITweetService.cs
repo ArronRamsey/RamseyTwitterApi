@@ -1,12 +1,10 @@
-﻿using Core.Dtos;
-
-namespace Core.Services.Interfaces
+﻿namespace Core.Services.Interfaces
 {
     public interface ITweetService
     {
         int TweetCount { get; }
         double TweetsPerMinute { get; }
-        void TweetReceived(TweetDto dto);
+        void TweetReceived();
         void StartWriteLogAsync();
         void StopWriteLogAsync();
     }
