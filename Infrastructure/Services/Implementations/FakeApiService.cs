@@ -9,7 +9,7 @@ namespace Infrastructure.Services.Implementations
         public void Connect()
         {
             var start = DateTime.Now;
-            while ((DateTime.Now - start).TotalSeconds < 30)
+            while ((DateTime.Now - start).TotalSeconds < 180)
             {
                 TweetReceived?.Invoke();
                 System.Threading.Thread.Sleep(500);
