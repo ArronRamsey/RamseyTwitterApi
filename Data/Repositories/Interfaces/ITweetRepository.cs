@@ -4,7 +4,7 @@ namespace Data.Repositories.Interfaces
 {
     public interface ITweetRepository
     {
-        IEnumerable<Tweets> GetAll();
-        void SaveTweet(Tweets tweet);
+        IEnumerable<TweetEntity> GetAll();
+        void SaveTweet(TweetEntity tweet);
     }
 }

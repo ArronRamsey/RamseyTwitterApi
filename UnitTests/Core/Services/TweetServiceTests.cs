@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using UnitTests;
 using Core.Dtos;
+using Data.Repositories.Interfaces;
+using Data.Entities;
 
 namespace Tests.Core.Services
 {
@@ -17,8 +19,9 @@ namespace Tests.Core.Services
             var dateTime = Substitute.For<IDateTimeService>();
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
-            var service = new TweetService(dateTime, logger, threadService);
-            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 16, 00, 00, 00)));
+            var repo = Substitute.For<ITweetRepository>();
+            repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text="123"} });
+            var service = new TweetService(dateTime, logger, threadService, repo);
             Assert.AreEqual(1, service.TweetCount);
         }
 
@@ -28,7 +31,8 @@ namespace Tests.Core.Services
             var dateTime = Substitute.For<IDateTimeService>();
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
-            var service = new TweetService(dateTime, logger, threadService);
+            var repo = Substitute.For<ITweetRepository>();
+            var service = new TweetService(dateTime, logger, threadService, repo);
             var tpm = service.GetTweetsPerMinute();
             Assert.AreEqual(0, tpm);
         }
@@ -40,7 +44,9 @@ namespace Tests.Core.Services
             dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 00, 00));
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
-            var service = new TweetService(dateTime, logger, threadService);
+            var repo = Substitute.For<ITweetRepository>();
+            repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" } });
+            var service = new TweetService(dateTime, logger, threadService, repo);
             service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
             service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
             service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
@@ -55,19 +61,20 @@ namespace Tests.Core.Services
             var dateTime = Substitute.For<IDateTimeService>();
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
-            var service = new TweetService(dateTime, logger, threadService);
+            var repo = Substitute.For<ITweetRepository>();
+            var service = new TweetService(dateTime, logger, threadService, repo);
 
-            service = new TweetService(dateTime, logger, threadService);
+            service = service = new TweetService(dateTime, logger, threadService, repo);
             service.StartWriteLogAsync();
             logger.Received().Log(LogLevel.Warning, Arg.Is<string>(x => x.StartsWith("Tweet Count:")));
             logger.ClearReceivedCalls();
 
-            service = new TweetService(dateTime, logger, threadService);
+            service = service = new TweetService(dateTime, logger, threadService, repo);
             service.StartWriteLogAsync();
             logger.Received().Log(LogLevel.Warning, Arg.Is<string>(x => x.StartsWith("Tweets Per Minute:")));
             logger.ClearReceivedCalls();
 
-            service = new TweetService(dateTime, logger, threadService);
+            service = service = new TweetService(dateTime, logger, threadService, repo);
             service.StartWriteLogAsync();
             service.StopWriteLogAsync();
             logger.Received().Log(LogLevel.Warning, "TweetService_LogWritingTaskCancelled");

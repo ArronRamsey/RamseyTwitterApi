@@ -1,6 +1,9 @@
 ﻿using Core.Dtos;
 using Core.Services.Interfaces;
 using Microsoft.Extensions.Logging;
+using Data.Repositories.Interfaces;
+using Data.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Services.Implementations
 {
@@ -10,10 +13,9 @@ namespace Core.Services.Implementations
         {
             get
             {
-                return _TweetCount;
+                return GetTweets().Count();
             }
         }
-        private int _TweetCount { get; set; }
 
         public double TweetsPerMinute
         {
@@ -27,17 +29,19 @@ namespace Core.Services.Implementations
         private IDateTimeService DateTimeService { get; }
         private ILogger<TweetService> Log { get; }
         private IThreadingService ThreadService { get; }
+        private ITweetRepository TweetRepo { get; }
 
         private CancellationTokenSource LoggingTaskCancelSource { get; set; }
         private CancellationToken LoggingToken { get; set; }
 
-        public TweetService(IDateTimeService dateTimeService, ILogger<TweetService> logger, IThreadingService threadingService)
+        public TweetService(IDateTimeService dateTimeService, ILogger<TweetService> logger, IThreadingService threadingService, ITweetRepository tweetRepository)
         {
             DateTimeService = dateTimeService;
             Log = logger;
             ThreadService = threadingService;
             LoggingTaskCancelSource = new CancellationTokenSource();
             LoggingToken = LoggingTaskCancelSource.Token;
+            TweetRepo = tweetRepository;
         }
 
         public double GetTweetsPerMinute()
@@ -46,7 +50,7 @@ namespace Core.Services.Implementations
             {
                 return 0;
             }
-            return _TweetCount / DateTimeService.Now().Subtract(Convert.ToDateTime(StartDate)).TotalMinutes;
+            return GetTweets().Count() / DateTimeService.Now().Subtract(Convert.ToDateTime(StartDate)).TotalMinutes;
         }
 
         public void TweetReceived(TweetDto dto)
@@ -55,7 +59,7 @@ namespace Core.Services.Implementations
             {
                 StartDate = DateTimeService.Now();
             }
-            _TweetCount += 1;
+            SaveTweet(dto);
         }
 
         public void StartWriteLogAsync()
@@ -83,6 +87,23 @@ namespace Core.Services.Implementations
                 Log.LogWarning($"Tweets Per Minute: {TweetsPerMinute}");
                 ThreadService.Sleep(2000);
             }
+        }
+        
+        private IEnumerable<TweetEntity> GetTweets()
+        {
+            return TweetRepo.GetAll();
+        }
+
+        private void SaveTweet(TweetDto dto)
+        {
+            var tweet = new TweetEntity()
+            {
+                Author= dto.AuthorId,
+                CreatedOn = dto.CreatedOn,
+                id = 4,
+                Text=dto.Text
+            };
+            TweetRepo.SaveTweet(tweet);
         }
 
     }

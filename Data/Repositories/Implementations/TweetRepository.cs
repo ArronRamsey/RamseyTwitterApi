@@ -5,16 +5,16 @@ namespace Data.Repositories.Implementations
 {
     public class TweetRepository : ITweetRepository
     {
-        private List<Tweets> Tweets { get; set; } = new List<Tweets>();
+        private List<TweetEntity> TweetEntities { get; set; } = new List<TweetEntity>();
 
-        public IEnumerable<Tweets> GetAll()
+        public IEnumerable<TweetEntity> GetAll()
         {
-            return Tweets.AsEnumerable();
+            return TweetEntities.AsEnumerable();
         }
 
-        public void SaveTweet(Tweets tweet)
+        public void SaveTweet(TweetEntity tweet)
         {
-            Tweets.Add(tweet);
+            TweetEntities.Add(tweet);
         }
     }
 }
