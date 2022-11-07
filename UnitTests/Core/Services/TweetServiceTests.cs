@@ -10,7 +10,7 @@ namespace Tests.Core.Services
     [TestClass]
     public class TweetServiceTests
     {
-        
+
         [TestMethod]
         public void TweetReceived()
         {
@@ -18,7 +18,7 @@ namespace Tests.Core.Services
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var service = new TweetService(dateTime, logger, threadService);
-            service.TweetReceived(new TweetDto("Text", "Id"));
+            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 16, 00, 00, 00)));
             Assert.AreEqual(1, service.TweetCount);
         }
 
@@ -41,9 +41,9 @@ namespace Tests.Core.Services
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var service = new TweetService(dateTime, logger, threadService);
-            service.TweetReceived(new TweetDto("Text", "Id"));
-            service.TweetReceived(new TweetDto("Text", "Id"));
-            service.TweetReceived(new TweetDto("Text", "Id"));
+            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
+            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
+            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
             dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 02, 00));
             var tpm = service.GetTweetsPerMinute();
             Assert.AreEqual(1.5, tpm);
@@ -56,7 +56,7 @@ namespace Tests.Core.Services
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var service = new TweetService(dateTime, logger, threadService);
-            
+
             service = new TweetService(dateTime, logger, threadService);
             service.StartWriteLogAsync();
             logger.Received().Log(LogLevel.Warning, Arg.Is<string>(x => x.StartsWith("Tweet Count:")));

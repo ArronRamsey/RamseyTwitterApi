@@ -1,4 +1,5 @@
 ﻿using Core.Dtos;
+using Core.Services.Implementations;
 using Core.Services.Interfaces;
 using Infrastructure.Services.Interfaces;
 using Tweetinvi;
@@ -11,12 +12,14 @@ namespace Infrastructure.Services.Implementations
     {
         public event ITwitterApiService.ReceivedTweet? TweetReceived;
        
+        IDateTimeService DateService { get; }
         private ISettingService settingService { get; }
         private ISampleStreamV2 Stream { get; }
 
-        public TweetInviService(ISettingService settings)
+        public TweetInviService(ISettingService settings, IDateTimeService dateTimeService)
         {
             settingService = settings;
+            DateService = dateTimeService;
             Stream = GetStream();
         }
 
@@ -41,7 +44,7 @@ namespace Infrastructure.Services.Implementations
             var sampledStream = new TwitterClient(credentials).StreamsV2.CreateSampleStream();
             sampledStream.TweetReceived += (sender, eventArgs) =>
             {
-                TweetReceived?.Invoke(new TweetDto(eventArgs.Tweet.Text, eventArgs.Tweet.AuthorId));
+                TweetReceived?.Invoke(new TweetDto(eventArgs.Tweet.Text, eventArgs.Tweet.AuthorId, DateService.Now()));
             };
             return sampledStream;
         }
