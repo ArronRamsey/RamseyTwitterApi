@@ -6,5 +6,6 @@ namespace Data.Repositories.Interfaces
     {
         IEnumerable<TweetEntity> GetAll();
         void SaveTweet(TweetEntity tweet);
+        TweetEntity GetLastTweet();
     }
 }

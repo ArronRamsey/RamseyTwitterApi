@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Data.Repositories.Interfaces;
 using Data.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Core.Services.Implementations
 {
@@ -83,8 +84,17 @@ namespace Core.Services.Implementations
         {
             while (!LoggingToken.IsCancellationRequested)
             {
-                Log.LogWarning($"Tweet Count: {TweetCount}");
-                Log.LogWarning($"Tweets Per Minute: {TweetsPerMinute}");
+                var lastTweet = TweetRepo.GetLastTweet();
+                var sb = new StringBuilder();
+                sb.AppendLine($"Tweet Count: {TweetCount}");
+                sb.AppendLine($"Tweets Per Minute: {TweetsPerMinute}");
+                sb.AppendLine($"Last Text: {lastTweet.Text}");
+                sb.AppendLine($"Last Author: {lastTweet.Author}");
+                Log.LogWarning(sb.ToString());
+                //Log.LogWarning($"Tweet Count: {TweetCount}");
+                //Log.LogWarning($"Tweets Per Minute: {TweetsPerMinute}");
+                //Log.LogWarning($"Last Text: {lastTweet.Text}");
+                //Log.LogWarning($"Last Author: {lastTweet.Author}");
                 ThreadService.Sleep(2000);
             }
         }

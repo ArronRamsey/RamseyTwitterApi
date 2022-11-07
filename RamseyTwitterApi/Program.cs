@@ -1,6 +1,8 @@
 using Core;
 using Core.Services.Implementations;
 using Core.Services.Interfaces;
+using Data.Repositories.Implementations;
+using Data.Repositories.Interfaces;
 using Infrastructure.Services.Implementations;
 using Infrastructure.Services.Interfaces;
 using RamseyTwitterApi.HostedServices;
@@ -16,7 +18,7 @@ builder.Services.Configure<Settings>(builder.Configuration.GetSection("Options")
 builder.Services.AddSingleton<ISettingService, SettingService>();
 builder.Services.AddSingleton<IDateTimeService, DateTimeService>();
 builder.Services.AddSingleton<ITwitterApiService, TweetInviService>();
-builder.Services.AddSingleton<ITwitterApiService, TweetInviService>();
+builder.Services.AddSingleton<ITweetRepository, TweetRepository>();
 builder.Services.AddSingleton<IThreadingService, ThreadingService>();
 builder.Services.AddSingleton<ITweetService, TweetService>();
 builder.Services.AddHostedService<TwitterStreamHostedService>();

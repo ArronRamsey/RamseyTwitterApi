@@ -12,6 +12,11 @@ namespace Data.Repositories.Implementations
             return TweetEntities.AsEnumerable();
         }
 
+        public TweetEntity GetLastTweet()
+        {
+            return TweetEntities.OrderByDescending(x => x.CreatedOn).First();
+        }
+
         public void SaveTweet(TweetEntity tweet)
         {
             TweetEntities.Add(tweet);
