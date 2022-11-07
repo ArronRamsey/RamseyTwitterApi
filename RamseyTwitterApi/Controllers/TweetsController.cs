@@ -18,11 +18,8 @@ namespace RamseyTwitterApi.Controllers
         [HttpGet]
         public TweetStatisticsDto GetInfo()
         {
-            return new TweetStatisticsDto()
-            {
-                TweetsPerMinute = apiService.TweetsPerMinute,
-                TweetsReceived = apiService.TweetCount
-            };
+            return apiService.Statistics;
         }
+
     }
 }

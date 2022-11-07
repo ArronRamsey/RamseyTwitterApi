@@ -3,13 +3,20 @@ using Core.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using Data.Repositories.Interfaces;
 using Data.Entities;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Core.Services.Implementations
 {
     public class TweetService : ITweetService
     {
+        public TweetStatisticsDto Statistics
+        {
+            get
+            {
+                return new TweetStatisticsDto() { TweetsPerMinute = TweetsPerMinute, TweetsReceived = TweetCount };
+            }
+        }
+
         public int TweetCount
         {
             get
@@ -91,10 +98,6 @@ namespace Core.Services.Implementations
                 sb.AppendLine($"Last Text: {lastTweet.Text}");
                 sb.AppendLine($"Last Author: {lastTweet.Author}");
                 Log.LogWarning(sb.ToString());
-                //Log.LogWarning($"Tweet Count: {TweetCount}");
-                //Log.LogWarning($"Tweets Per Minute: {TweetsPerMinute}");
-                //Log.LogWarning($"Last Text: {lastTweet.Text}");
-                //Log.LogWarning($"Last Author: {lastTweet.Author}");
                 ThreadService.Sleep(2000);
             }
         }
@@ -110,7 +113,7 @@ namespace Core.Services.Implementations
             {
                 Author= dto.AuthorId,
                 CreatedOn = dto.CreatedOn,
-                id = 4,
+                Id = 4,
                 Text=dto.Text
             };
             TweetRepo.SaveTweet(tweet);

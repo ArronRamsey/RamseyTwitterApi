@@ -8,4 +8,5 @@ namespace Data.Repositories.Interfaces
         void SaveTweet(TweetEntity tweet);
         TweetEntity GetLastTweet();
     }
+
 }

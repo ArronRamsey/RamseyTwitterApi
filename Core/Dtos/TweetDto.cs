@@ -1,9 +1,7 @@
-﻿
-namespace Core.Dtos
+﻿namespace Core.Dtos
 {
     public class TweetDto : IEquatable<TweetDto?>
     {
-
         public string Text { get; set; } = string.Empty;
         public string AuthorId { get; set; } = string.Empty;
         public DateTime CreatedOn { get; set; }

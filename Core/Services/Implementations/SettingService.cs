@@ -17,4 +17,5 @@ namespace Core.Services.Implementations
             return _settings;
         }
     }
+
 }

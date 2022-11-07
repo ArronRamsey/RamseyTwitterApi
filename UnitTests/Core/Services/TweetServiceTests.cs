@@ -6,6 +6,8 @@ using UnitTests;
 using Core.Dtos;
 using Data.Repositories.Interfaces;
 using Data.Entities;
+using Tweetinvi.Core.Models;
+using System.Text;
 
 namespace Tests.Core.Services
 {
@@ -56,30 +58,47 @@ namespace Tests.Core.Services
         }
 
         [TestMethod]
-        public void AsyncLogging()
+        public void GetStatistics()
         {
             var dateTime = Substitute.For<IDateTimeService>();
+            dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 00, 00));
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var repo = Substitute.For<ITweetRepository>();
+            repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" } });
             var service = new TweetService(dateTime, logger, threadService, repo);
-
-            service = service = new TweetService(dateTime, logger, threadService, repo);
-            service.StartWriteLogAsync();
-            logger.Received().Log(LogLevel.Warning, Arg.Is<string>(x => x.StartsWith("Tweet Count:")));
-            logger.ClearReceivedCalls();
-
-            service = service = new TweetService(dateTime, logger, threadService, repo);
-            service.StartWriteLogAsync();
-            logger.Received().Log(LogLevel.Warning, Arg.Is<string>(x => x.StartsWith("Tweets Per Minute:")));
-            logger.ClearReceivedCalls();
-
-            service = service = new TweetService(dateTime, logger, threadService, repo);
-            service.StartWriteLogAsync();
-            service.StopWriteLogAsync();
-            logger.Received().Log(LogLevel.Warning, "TweetService_LogWritingTaskCancelled");
-            logger.ClearReceivedCalls();
+            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
+            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
+            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
+            dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 02, 00));
+            var stats = service.Statistics;
+            Assert.AreEqual(1.5, stats.TweetsPerMinute);
         }
+
+        //Commenting async logging out.
+        //[TestMethod]
+        //public void AsyncLogging()
+        //{
+        //    var builder = new StringBuilder();
+        //    builder.AppendLine("Tweet Count: 0");
+        //    builder.AppendLine("Tweets Per Minute: 0");
+        //    builder.AppendLine("Last Text: Text");
+        //    builder.AppendLine("Last Author: Author");
+
+        //    var dateTime = Substitute.For<IDateTimeService>();
+        //    var logger = Substitute.For<MockLogger<TweetService>>();
+        //    var threadService = Substitute.For<IThreadingService>();
+        //    var repo = Substitute.For<ITweetRepository>();
+        //    repo.GetLastTweet().Returns(new TweetEntity() { Author = "Author", Text = "Text" });
+        //    var service = new TweetService(dateTime, logger, threadService, repo);
+
+        //    service.StartWriteLogAsync();
+        //    logger.Received().Log(LogLevel.Warning, builder.ToString());
+        //    logger.ClearReceivedCalls();
+        //    service.StopWriteLogAsync();
+        //    logger.Received().Log(LogLevel.Warning, "TweetService_LogWritingTaskCancelled");
+        //    logger.ClearReceivedCalls();
+        //}
 
     }
 }

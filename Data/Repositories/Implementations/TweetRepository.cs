@@ -21,5 +21,6 @@ namespace Data.Repositories.Implementations
         {
             TweetEntities.Add(tweet);
         }
+
     }
 }

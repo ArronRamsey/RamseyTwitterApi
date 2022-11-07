@@ -3,7 +3,6 @@ using Infrastructure.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using RamseyTwitterApi.HostedServices;
-using static Infrastructure.Services.Interfaces.ITwitterApiService;
 
 namespace UnitTests.API.HostedServices
 {

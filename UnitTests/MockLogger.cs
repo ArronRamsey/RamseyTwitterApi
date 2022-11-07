@@ -17,5 +17,6 @@ namespace UnitTests
         public virtual bool IsEnabled(LogLevel logLevel) => true;
 
         public abstract IDisposable BeginScope<TState>(TState state);
+
     }
 }

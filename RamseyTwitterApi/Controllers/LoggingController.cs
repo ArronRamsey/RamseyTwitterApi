@@ -27,5 +27,6 @@ namespace RamseyTwitterApi.Controllers
         {
             TweetService.StartWriteLogAsync();
         }
+
     }
 }

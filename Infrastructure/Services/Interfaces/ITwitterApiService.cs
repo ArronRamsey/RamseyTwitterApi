@@ -9,4 +9,5 @@ namespace Infrastructure.Services.Interfaces
         void Connect();
         void Disconnect();
     }
+
 }

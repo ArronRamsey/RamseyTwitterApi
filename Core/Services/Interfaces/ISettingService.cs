@@ -4,4 +4,5 @@
     {
         Settings GetSettings();
     }
+
 }

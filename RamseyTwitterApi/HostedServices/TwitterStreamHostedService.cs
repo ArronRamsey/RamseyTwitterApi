@@ -34,5 +34,6 @@ namespace RamseyTwitterApi.HostedServices
             Log.LogWarning($"Final Tweets Per Minute: {TweetService.TweetsPerMinute}");
             return Task.CompletedTask;
         }
+
     }
 }
