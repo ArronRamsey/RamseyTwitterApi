@@ -1,6 +1,6 @@
 ﻿namespace Core.Dtos
 {
-    public class TweetInformationDto
+    public class TweetStatisticsDto
     {
         public int TweetsReceived { get; set; }
         public double TweetsPerMinute { get; set; }
