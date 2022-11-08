@@ -1,6 +1,6 @@
-﻿using Core.Services.Interfaces;
+﻿using Abstractions.Interfaces;
 
-namespace Core.Services.Implementations
+namespace Abstractions.Implementations
 {
     public class DateTimeService : IDateTimeService
     {

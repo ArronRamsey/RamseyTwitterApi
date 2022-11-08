@@ -1,4 +1,5 @@
-﻿using Core.Dtos;
+﻿using Abstractions.Interfaces;
+using Core.Dtos;
 using Core.Services.Interfaces;
 using Infrastructure.Services.Interfaces;
 using Tweetinvi;

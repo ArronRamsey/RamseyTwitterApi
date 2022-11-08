@@ -1,3 +1,5 @@
+using Abstractions.Implementations;
+using Abstractions.Interfaces;
 using Core;
 using Core.Services.Implementations;
 using Core.Services.Interfaces;
@@ -5,7 +7,6 @@ using Data.Repositories.Implementations;
 using Data.Repositories.Interfaces;
 using Infrastructure.Services.Implementations;
 using Infrastructure.Services.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
 using RamseyTwitterApi.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,4 @@
-﻿using Infrastructure.Services.Interfaces;
+﻿using Abstractions.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Infrastructure.Services.Implementations

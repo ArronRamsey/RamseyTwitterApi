@@ -1,13 +1,10 @@
 ﻿using Core.Services.Implementations;
-using Core.Services.Interfaces;
-using Microsoft.Extensions.Logging;
 using NSubstitute;
 using UnitTests;
 using Core.Dtos;
 using Data.Repositories.Interfaces;
 using Entities;
-using Tweetinvi.Core.Models;
-using System.Text;
+using Abstractions.Interfaces;
 
 namespace Tests.Core.Services
 {

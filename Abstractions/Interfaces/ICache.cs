@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Services.Interfaces
+﻿namespace Abstractions.Interfaces
 {
     public interface ICache
     {

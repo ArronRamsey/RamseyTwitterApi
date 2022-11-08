@@ -1,4 +1,4 @@
-﻿namespace Core.Services.Interfaces
+﻿namespace Abstractions.Interfaces
 {
     public interface IDateTimeService
     {

@@ -1,4 +1,4 @@
-﻿using Core.Services.Interfaces;
+﻿using Abstractions.Interfaces;
 
 namespace Core.Services.Implementations
 {
