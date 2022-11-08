@@ -34,13 +34,14 @@ builder.Services.AddSingleton<ITweetService, TweetService>();
 builder.Services.AddSingleton<IGuidService, GuidService>();
 builder.Services.AddSingleton<ITweetStatisticsService, TweetStatisticsService>();
 builder.Services.AddSingleton<IHashtagRankingService, HashtagRankingService>();
+builder.Services.AddSingleton<ILoggingService, LoggingService>();
 
 //This allows the controller to interract with the hosted service
-builder.Services.AddSingleton<TweetLoggerHostedService>();
-builder.Services.AddHostedService(provider => provider.GetService<TweetLoggerHostedService>());
+//builder.Services.AddSingleton<TweetLoggerHostedService>();
+//builder.Services.AddHostedService(provider => provider.GetService<TweetLoggerHostedService>());
 
 builder.Services.AddHostedService<TwitterStreamHostedService>();
-//builder.Services.AddHostedService<TweetLoggerHostedService>();
+builder.Services.AddHostedService<TweetLoggerHostedService>();
 
 var app = builder.Build();
 

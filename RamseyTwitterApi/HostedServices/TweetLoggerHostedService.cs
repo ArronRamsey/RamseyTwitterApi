@@ -19,30 +19,15 @@ namespace RamseyTwitterApi.HostedServices
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            StartLogging();
+            Task.Run(() => LogService.RunLogAsync(LoggingToken), LoggingToken);
             return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
             LoggingTaskCancelSource.Cancel();
+            Thread.Sleep(5000);
             return Task.CompletedTask;
-        }
-
-        public void StopLogging()
-        {
-            LoggingTaskCancelSource.Cancel();
-        }
-
-        public void StartLogging()
-        {
-            if (LoggingToken.IsCancellationRequested)
-            {
-                //We cancelled the task.  Need to re-initialize
-                LoggingTaskCancelSource = new CancellationTokenSource();
-                LoggingToken = LoggingTaskCancelSource.Token;
-            }
-            Task.Run(() => LogService.StartWriteLog(), LoggingToken);
         }
        
     }

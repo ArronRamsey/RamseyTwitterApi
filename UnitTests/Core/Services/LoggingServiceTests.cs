@@ -12,7 +12,7 @@ namespace UnitTests.Core.Services
     public class LoggingServiceTests
     {
         [TestMethod]
-        public void StartWriteLog()
+        public void StartWriteLog_Enabled()
         {
             var logger = Substitute.For<MockLogger<LoggingService>>();
             var thread = Substitute.For<IThreadingService>();
@@ -24,8 +24,26 @@ namespace UnitTests.Core.Services
             var tweets = Substitute.For<ITweetService>();
             tweets.GetLastTweet().Returns(GetTestTweetEntity());
             var service = new LoggingService(logger, thread, stats, tags, tweets);
-            service.StartWriteLog();
+            service.LoggingEnabled = true;
+            service.WriteLog();
             logger.Received().Log(LogLevel.Warning, GetLogMessage());
+        }
+
+        [TestMethod]
+        public void StartWriteLog_Disabled()
+        {
+            var logger = Substitute.For<MockLogger<LoggingService>>();
+            var thread = Substitute.For<IThreadingService>();
+            var stats = Substitute.For<ITweetStatisticsService>();
+            stats.GetTweetCount().Returns(5);
+            stats.GetTweetsPerMinute().Returns(5.75);
+            var tags = Substitute.For<IHashtagRankingService>();
+            tags.GetStatistics().Returns("HashTagStats");
+            var tweets = Substitute.For<ITweetService>();
+            tweets.GetLastTweet().Returns(GetTestTweetEntity());
+            var service = new LoggingService(logger, thread, stats, tags, tweets);
+            service.WriteLog();
+            Assert.AreEqual(0, logger.ReceivedCalls().Count());
         }
 
         private TweetEntity GetTestTweetEntity()
