@@ -32,6 +32,7 @@ builder.Services.AddSingleton<ICacheService, MemoryCacheService>();
 builder.Services.AddSingleton<ITweetService, TweetService>();
 builder.Services.AddSingleton<IGuidService, GuidService>();
 builder.Services.AddSingleton<ITweetStatisticsService, TweetStatisticsService>();
+builder.Services.AddSingleton<IHashtagRankingService, HashtagRankingService>();
 builder.Services.AddHostedService<TwitterStreamHostedService>();
 builder.Services.AddHostedService<TweetLoggerHostedService>();
 
