@@ -24,8 +24,8 @@ builder.Services.AddSingleton<IDateTimeService, DateTimeService>();
 builder.Services.AddSingleton<ITwitterApiService, TweetInviService>();
 //builder.Services.AddSingleton<ITwitterApiService, FakeApiService>();
 
-//builder.Services.AddSingleton<ITweetRepository, TweetRepository>();
-builder.Services.AddSingleton<ITweetRepository, MemoryCacheTweetRepository>();
+builder.Services.AddSingleton<ITweetRepository, TweetRepository>();
+//builder.Services.AddSingleton<ITweetRepository, MemoryCacheTweetRepository>();
 
 builder.Services.AddSingleton<IThreadingService, ThreadingService>();
 builder.Services.AddSingleton<ICache, MemoryCacheService>();

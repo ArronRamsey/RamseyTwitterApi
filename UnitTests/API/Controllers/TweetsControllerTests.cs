@@ -14,7 +14,7 @@ namespace UnitTests.API.Controllers
             var service = Substitute.For<ITweetService>();
             service.Statistics.Returns(new TweetStatisticsDto { TweetsPerMinute = 1, TweetsReceived = 2 });
             var expectedDto = new TweetStatisticsDto { TweetsPerMinute = 1, TweetsReceived = 2 };
-            var controller = new TweetsController(service);
+            var controller = new StatsController(service);
             var stats = controller.GetInfo();
             Assert.AreEqual(expectedDto, stats);
         }

@@ -6,17 +6,17 @@ namespace RamseyTwitterApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TweetsController : ControllerBase
+    public class StatsController : ControllerBase
     {
         private ITweetService apiService { get; }
         
-        public TweetsController(ITweetService tweetService)
+        public StatsController(ITweetService tweetService)
         {
             apiService = tweetService;
         }
 
         [HttpGet]
-        public TweetStatisticsDto GetInfo()
+        public TweetStatisticsDto GetStats()
         {
             return apiService.Statistics;
         }
