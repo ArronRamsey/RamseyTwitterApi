@@ -42,6 +42,7 @@ namespace RamseyTwitterApi.HostedServices
             ApiService.Disconnect();
             Log.LogWarning($"Final Tweet Count: {TweetStatisticsService.GetTweetCount()}");
             Log.LogWarning($"Final Tweets Per Minute: {TweetStatisticsService.GetTweetsPerMinute()}");
+            Log.LogWarning($"Final Hashtag Rank: {RankingService.GetStatistics()}");
             return Task.CompletedTask;
         }
 

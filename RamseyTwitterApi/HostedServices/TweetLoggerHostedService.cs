@@ -19,6 +19,7 @@ namespace RamseyTwitterApi.HostedServices
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            LogService.LoggingEnabled = true;
             Task.Run(() => LogService.RunLogAsync(LoggingToken), LoggingToken);
             return Task.CompletedTask;
         }
