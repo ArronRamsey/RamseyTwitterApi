@@ -10,6 +10,8 @@ namespace Core.Services.Implementations
 {
     public class TweetService : ITweetService
     {
+        public Dictionary<string, int> TagStats { get; set; } = new Dictionary<string, int>();
+        
         public TweetStatisticsDto Statistics
         {
             get
@@ -39,11 +41,13 @@ namespace Core.Services.Implementations
         private ILogger<TweetService> Log { get; }
         private IThreadingService ThreadService { get; }
         private ITweetRepository TweetRepo { get; }
+        private IGuid GuidService { get; }
 
         private CancellationTokenSource LoggingTaskCancelSource { get; set; }
         private CancellationToken LoggingToken { get; set; }
 
-        public TweetService(IDateTimeService dateTimeService, ILogger<TweetService> logger, IThreadingService threadingService, ITweetRepository tweetRepository)
+        public TweetService(IDateTimeService dateTimeService, ILogger<TweetService> logger, IThreadingService threadingService, 
+                            ITweetRepository tweetRepository, IGuid guidService)
         {
             DateTimeService = dateTimeService;
             Log = logger;
@@ -51,6 +55,7 @@ namespace Core.Services.Implementations
             LoggingTaskCancelSource = new CancellationTokenSource();
             LoggingToken = LoggingTaskCancelSource.Token;
             TweetRepo = tweetRepository;
+            GuidService = guidService;
         }
 
         public double GetTweetsPerMinute()
@@ -69,6 +74,22 @@ namespace Core.Services.Implementations
                 StartDate = DateTimeService.Now();
             }
             SaveTweet(dto);
+            UpdateTagStats(dto);
+        }
+
+        private void UpdateTagStats(TweetDto dto)
+        {
+            foreach(var tag in dto.HashTags)
+            {
+                if(TagStats.ContainsKey(tag))
+                {
+                    TagStats[tag] += 1;
+                }
+                else
+                {
+                    TagStats.Add(tag, 1);
+                }
+            }
         }
 
         public void StartWriteLogAsync()
@@ -98,9 +119,25 @@ namespace Core.Services.Implementations
                 sb.AppendLine($"Tweets Per Minute: {TweetsPerMinute}");
                 sb.AppendLine($"Last Text: {lastTweet.Text}");
                 sb.AppendLine($"Last Author: {lastTweet.Author}");
+                sb.AppendLine($"HashTags: {string.Join(",", lastTweet.Tags.Select(x => x.Text).ToList())}");
+                sb.AppendLine();
+                sb.AppendLine(GetStats());
                 Log.LogWarning(sb.ToString());
                 ThreadService.Sleep(2000);
             }
+        }
+
+        public string GetStats()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("HashTag Top 10:");
+            var i = 1;
+            foreach (var stat in TagStats.OrderByDescending(x => x.Value).Take(10).ToList())
+            {
+                sb.AppendLine($"Place: {i}.  Used: {stat.Value}.  Tag: {stat.Key}");
+                i ++;
+            }
+            return sb.ToString();
         }
         
         private IEnumerable<TweetEntity> GetTweets()
@@ -110,13 +147,20 @@ namespace Core.Services.Implementations
 
         private void SaveTweet(TweetDto dto)
         {
+            var tweetId = GuidService.GetGuid().ToString();
             var tweet = new TweetEntity()
             {
                 Author= dto.AuthorId,
                 CreatedOn = dto.CreatedOn,
-                Id = 4,
+                Id = tweetId,
                 Text=dto.Text
             };
+            dto.HashTags.ToList().ForEach(x => tweet.Tags.Add(new HashTagEntity()
+            {
+                Id = GuidService.GetGuid().ToString(),
+                TweetId = tweetId,
+                Text = x
+            }));
             TweetRepo.SaveTweet(tweet);
         }
 

@@ -14,54 +14,116 @@ namespace UnitTests.Core.Dtos
         {
             var dto = new TweetDto();
             var props = dto.GetType().GetProperties();
-            Assert.AreEqual(3, props.Count());
-        }
-
-        [TestMethod]
-        public void ConstructorsEqual()
-        {
-            var dto1 = new TweetDto() { Text = "1", AuthorId = "2", CreatedOn = new DateTime(2020,11,06,00,00,00)};
-            var dto2 = new TweetDto("1", "2", new DateTime(2020, 11, 06, 00, 00, 00));
-            Assert.AreEqual(dto1, dto2);
+            Assert.AreEqual(4, props.Count());
         }
 
         [TestMethod]
         public void Equals0()
         {
-            var dto1 = new TweetDto("1", "2", new DateTime(2020, 11, 06, 00, 00, 00));
-            var dto2 = new TweetDto("1", "2", new DateTime(2020, 11, 06, 00, 00, 00));
+            var dto1 = new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            };
+            var dto2 = new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            };
             Assert.AreEqual(dto1, dto2);
         }
 
         [TestMethod]
         public void Equals1()
         {
-            var dto1 = new TweetDto("1", "2", new DateTime(2020, 11, 06, 00, 00, 00));
-            var dto2 = new TweetDto("1", "2", new DateTime(2020, 11, 06, 00, 00, 00));
+            var dto1 = new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            };
+            var dto2 = new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            };
             Assert.IsTrue(dto1 == dto2);
         }
 
         [TestMethod]
         public void Equals2()
         {
-            var dto1 = new TweetDto("1", "3", new DateTime(2020, 11, 06, 00, 00, 00));
-            var dto2 = new TweetDto("1", "2", new DateTime(2020, 11, 06, 00, 00, 00));
+            var dto1 = new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            };
+            var dto2 = new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text1",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            };
             Assert.IsTrue(dto1 != dto2);
         }
 
         [TestMethod]
         public void Equals3()
         {
-            var dto1 = new TweetDto("1", "3", new DateTime(2020, 11, 06, 00, 00, 00));
-            var dto2 = new TweetDto("1", "2", new DateTime(2020, 11, 06, 00, 00, 00));
+            var dto1 = new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            };
+            var dto2 = new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text1",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            };
             Assert.AreNotEqual(dto1, dto2);
         }
 
         [TestMethod]
         public void Equals4()
         {
-            var dto1 = new TweetDto("1", "2", new DateTime(2020, 11, 06, 00, 00, 00)).GetHashCode();
-            var dto2 = new TweetDto("1", "2", new DateTime(2020, 11, 06, 00, 00, 00)).GetHashCode();
+            var dto1 = new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            }.GetHashCode();
+            var dto2 =  new TweetDto()
+            {
+                AuthorId = "Id",
+                Text = "Text",
+                CreatedOn =
+                new DateTime(2022, 11, 06, 00, 00, 00),
+                HashTags = new List<string>()
+            }.GetHashCode();
             Assert.AreEqual(dto1, dto2);
         }
 

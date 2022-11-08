@@ -10,6 +10,7 @@ namespace Core.Services.Interfaces
         void TweetReceived(TweetDto dto);
         void StartWriteLogAsync();
         void StopWriteLogAsync();
+        string GetStats();
     }
 
 }

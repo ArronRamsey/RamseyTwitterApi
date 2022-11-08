@@ -16,9 +16,17 @@ namespace RamseyTwitterApi.Controllers
         }
 
         [HttpGet]
+        [Route("GetStats")]
         public TweetStatisticsDto GetStats()
         {
             return apiService.Statistics;
+        }
+
+        [HttpGet]
+        [Route("GetTags")]
+        public string GetTags()
+        {
+            return apiService.GetStats();
         }
 
     }

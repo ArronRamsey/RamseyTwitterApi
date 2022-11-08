@@ -19,8 +19,9 @@ namespace Tests.Core.Services
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var repo = Substitute.For<ITweetRepository>();
+            var guid = Substitute.For<IGuid>();
             repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text="123"} });
-            var service = new TweetService(dateTime, logger, threadService, repo);
+            var service = new TweetService(dateTime, logger, threadService, repo, guid);
             Assert.AreEqual(1, service.TweetCount);
         }
 
@@ -31,7 +32,8 @@ namespace Tests.Core.Services
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var repo = Substitute.For<ITweetRepository>();
-            var service = new TweetService(dateTime, logger, threadService, repo);
+            var guid = Substitute.For<IGuid>();
+            var service = new TweetService(dateTime, logger, threadService, repo, guid);
             var tpm = service.GetTweetsPerMinute();
             Assert.AreEqual(0, tpm);
         }
@@ -45,10 +47,11 @@ namespace Tests.Core.Services
             var threadService = Substitute.For<IThreadingService>();
             var repo = Substitute.For<ITweetRepository>();
             repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" } });
-            var service = new TweetService(dateTime, logger, threadService, repo);
-            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
-            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
-            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
+            var guid = Substitute.For<IGuid>();
+            var service = new TweetService(dateTime, logger, threadService, repo, guid);
+            service.TweetReceived(new TweetDto() { AuthorId = "Id",Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });
+            service.TweetReceived(new TweetDto() { AuthorId = "Id", Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });
+            service.TweetReceived(new TweetDto() { AuthorId = "Id", Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });
             dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 02, 00));
             var tpm = service.GetTweetsPerMinute();
             Assert.AreEqual(1.5, tpm);
@@ -63,10 +66,11 @@ namespace Tests.Core.Services
             var threadService = Substitute.For<IThreadingService>();
             var repo = Substitute.For<ITweetRepository>();
             repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" } });
-            var service = new TweetService(dateTime, logger, threadService, repo);
-            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
-            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
-            service.TweetReceived(new TweetDto("Text", "Id", new DateTime(2022, 11, 06, 00, 00, 00)));
+            var guid = Substitute.For<IGuid>();
+            var service = new TweetService(dateTime, logger, threadService, repo, guid);
+            service.TweetReceived(new TweetDto() { AuthorId = "Id", Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });
+            service.TweetReceived(new TweetDto() { AuthorId = "Id", Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });
+            service.TweetReceived(new TweetDto() { AuthorId = "Id", Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });
             dateTime.Now().Returns(new DateTime(2022, 11, 03, 01, 02, 00));
             var stats = service.Statistics;
             Assert.AreEqual(1.5, stats.TweetsPerMinute);

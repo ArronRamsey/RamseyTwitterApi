@@ -42,16 +42,16 @@ namespace Infrastructure.Services.Implementations
                 ConsumerSecret = settingService.GetSettings().ConsumerSecret
             };
             var sampledStream = new TwitterClient(credentials).StreamsV2.CreateSampleStream();
-            sampledStream.TweetReceived += (sender, eventArgs) =>
+            sampledStream.TweetReceived += (sender, args) =>
             {
                 TweetReceived?.Invoke(new TweetDto()
                 {
-                    AuthorId = eventArgs.Tweet.AuthorId,
+                    AuthorId = args.Tweet.AuthorId,
                     CreatedOn = DateService.Now(),
-                    Text = eventArgs.Tweet.Text,
-                    HashTags = eventArgs.Tweet.Entities.Hashtags == null ? 
+                    Text = args.Tweet.Text,
+                    HashTags = args.Tweet.Entities.Hashtags == null ? 
                                new List<string>() :
-                               eventArgs.Tweet.Entities.Hashtags.Select(x => x.Tag).ToList()
+                               args.Tweet.Entities.Hashtags.Select(x => x.Tag).ToList()
 
                 });; 
             };
