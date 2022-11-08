@@ -9,16 +9,19 @@ namespace RamseyTwitterApi.HostedServices
         private ITweetService TweetService { get; }
         private ILogger<TwitterStreamHostedService> Log { get; }
         private ITweetStatisticsService TweetStatisticsService { get; }
+        private IHashtagRankingService RankingService { get; }
 
         public TwitterStreamHostedService(ITwitterApiService twitterApiService, 
                                           ITweetService tweetService, 
                                           ILogger<TwitterStreamHostedService> log,
-                                          ITweetStatisticsService tweetStatisticsService)
+                                          ITweetStatisticsService tweetStatisticsService,
+                                          IHashtagRankingService hashtagRankingService)
         {
             ApiService = twitterApiService;
             TweetService = tweetService;
             Log = log;
             TweetStatisticsService = tweetStatisticsService;
+            RankingService = hashtagRankingService;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -27,6 +30,7 @@ namespace RamseyTwitterApi.HostedServices
             {
                 TweetService.TweetReceived(dto);
                 TweetStatisticsService.TweetReceived();
+                RankingService.TweetReceived(dto);
             };
             Task.Run(() => ApiService.Connect());
             Log.LogWarning("TwitterStreamService_StartAsync");

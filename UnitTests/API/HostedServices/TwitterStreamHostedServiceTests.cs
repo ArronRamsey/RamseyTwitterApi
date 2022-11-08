@@ -16,7 +16,8 @@ namespace UnitTests.API.HostedServices
             var tweetService = Substitute.For<ITweetService>();
             var logger = Substitute.For<ILogger<TwitterStreamHostedService>>();
             var stats = Substitute.For<ITweetStatisticsService>();
-            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats);
+            var hashtags = Substitute.For<IHashtagRankingService>();
+            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats, hashtags);
             service.StartAsync(new CancellationToken());
             apiService.Received().Connect();
         }
@@ -28,7 +29,8 @@ namespace UnitTests.API.HostedServices
             var tweetService = Substitute.For<ITweetService>();
             var logger = Substitute.For<ILogger<TwitterStreamHostedService>>();
             var stats = Substitute.For<ITweetStatisticsService>();
-            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats);
+            var hashtags = Substitute.For<IHashtagRankingService>();
+            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats, hashtags);
             var returnedTask = service.StartAsync(new CancellationToken());
             Assert.IsTrue(returnedTask.IsCompleted);
         }
@@ -40,7 +42,8 @@ namespace UnitTests.API.HostedServices
             var tweetService = Substitute.For<ITweetService>();
             var logger = Substitute.For<ILogger<TwitterStreamHostedService>>();
             var stats = Substitute.For<ITweetStatisticsService>();
-            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats);
+            var hashtags = Substitute.For<IHashtagRankingService>();
+            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats, hashtags);
             service.StartAsync(new CancellationToken());
             Assert.AreEqual(1, logger.ReceivedCalls().Count());
         }
@@ -52,7 +55,8 @@ namespace UnitTests.API.HostedServices
             var tweetService = Substitute.For<ITweetService>();
             var logger = Substitute.For<ILogger<TwitterStreamHostedService>>();
             var stats = Substitute.For<ITweetStatisticsService>();
-            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats);
+            var hashtags = Substitute.For<IHashtagRankingService>();
+            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats, hashtags);
             service.StopAsync(new CancellationToken());
             apiService.Received().Disconnect();
         }
@@ -64,7 +68,8 @@ namespace UnitTests.API.HostedServices
             var tweetService = Substitute.For<ITweetService>();
             var logger = Substitute.For<ILogger<TwitterStreamHostedService>>();
             var stats = Substitute.For<ITweetStatisticsService>();
-            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats);
+            var hashtags = Substitute.For<IHashtagRankingService>();
+            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats, hashtags);
             service.StopAsync(new CancellationToken());
             Assert.AreEqual(2, logger.ReceivedCalls().Count());
         }
@@ -76,7 +81,8 @@ namespace UnitTests.API.HostedServices
             var tweetService = Substitute.For<ITweetService>();
             var logger = Substitute.For<ILogger<TwitterStreamHostedService>>();
             var stats = Substitute.For<ITweetStatisticsService>();
-            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats);
+            var hashtags = Substitute.For<IHashtagRankingService>();
+            var service = new TwitterStreamHostedService(apiService, tweetService, logger, stats, hashtags);
             var returnedTask = service.StopAsync(new CancellationToken());
             Assert.IsTrue(returnedTask.IsCompleted);
         }
