@@ -5,6 +5,7 @@ using Data.Repositories.Implementations;
 using Data.Repositories.Interfaces;
 using Infrastructure.Services.Implementations;
 using Infrastructure.Services.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using RamseyTwitterApi.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection("Options"));
+builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<ISettingService, SettingService>();
 builder.Services.AddSingleton<IDateTimeService, DateTimeService>();
 builder.Services.AddSingleton<ITwitterApiService, TweetInviService>();
