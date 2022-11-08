@@ -1,5 +1,5 @@
-﻿using Core.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using RamseyTwitterApi.HostedServices;
 
 namespace RamseyTwitterApi.Controllers
 {
@@ -7,25 +7,25 @@ namespace RamseyTwitterApi.Controllers
     [Route("[controller]")]
     public class LoggingController : ControllerBase
     {
-        private ITweetService TweetService { get; }
+        private TweetLoggerHostedService LoggingService { get; }
         
-        public LoggingController(ITweetService tweetService)
+        public LoggingController(TweetLoggerHostedService hostedService)
         {
-            TweetService = tweetService;
+            LoggingService = hostedService;
         }
 
         [HttpPut]
         [Route("StopLogging")]
         public void StopLogging()
         {
-            TweetService.StopWriteLogAsync();
+            LoggingService.StopLogging();
         }
 
         [HttpPut]
         [Route("StartLogging")]
         public void StartLogging()
         {
-            TweetService.StartWriteLogAsync();
+            LoggingService.StartLogging();
         }
 
     }
