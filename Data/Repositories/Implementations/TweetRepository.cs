@@ -7,20 +7,11 @@ namespace Data.Repositories.Implementations
     {
         private List<TweetEntity> TweetEntities { get; set; } = new List<TweetEntity>();
 
-        public IEnumerable<TweetEntity> GetAll()
-        {
-            return TweetEntities.AsEnumerable();
-        }
+        public IEnumerable<TweetEntity> GetAll() => TweetEntities.AsEnumerable();
 
-        public TweetEntity GetLastTweet()
-        {
-            return TweetEntities.OrderByDescending(x => x.CreatedOn).DefaultIfEmpty(new TweetEntity()).First();
-        }
+        public TweetEntity GetLastTweet() => TweetEntities.OrderByDescending(x => x.CreatedOn).DefaultIfEmpty(new TweetEntity()).First();
 
-        public void SaveTweet(TweetEntity tweet)
-        {
-            TweetEntities.Add(tweet);
-        }
+        public void SaveTweet(TweetEntity tweet) => TweetEntities.Add(tweet);
 
     }
 }
