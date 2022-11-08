@@ -1,6 +1,6 @@
 ﻿namespace FrameworkAbstractions.Interfaces
 {
-    public interface ICache
+    public interface ICacheService
     {
         void Set(string key, object value);
         void Set(string key, object value, int lengthInMinutes);

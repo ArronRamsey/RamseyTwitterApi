@@ -19,7 +19,7 @@ namespace Tests.Core.Services
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var repo = Substitute.For<ITweetRepository>();
-            var guid = Substitute.For<IGuid>();
+            var guid = Substitute.For<IGuidService>();
             repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text="123"} });
             var service = new TweetService(dateTime, logger, threadService, repo, guid);
             Assert.AreEqual(1, service.TweetCount);
@@ -32,7 +32,7 @@ namespace Tests.Core.Services
             var logger = Substitute.For<MockLogger<TweetService>>();
             var threadService = Substitute.For<IThreadingService>();
             var repo = Substitute.For<ITweetRepository>();
-            var guid = Substitute.For<IGuid>();
+            var guid = Substitute.For<IGuidService>();
             var service = new TweetService(dateTime, logger, threadService, repo, guid);
             var tpm = service.GetTweetsPerMinute();
             Assert.AreEqual(0, tpm);
@@ -47,7 +47,7 @@ namespace Tests.Core.Services
             var threadService = Substitute.For<IThreadingService>();
             var repo = Substitute.For<ITweetRepository>();
             repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" } });
-            var guid = Substitute.For<IGuid>();
+            var guid = Substitute.For<IGuidService>();
             var service = new TweetService(dateTime, logger, threadService, repo, guid);
             service.TweetReceived(new TweetDto() { AuthorId = "Id",Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });
             service.TweetReceived(new TweetDto() { AuthorId = "Id", Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });
@@ -66,7 +66,7 @@ namespace Tests.Core.Services
             var threadService = Substitute.For<IThreadingService>();
             var repo = Substitute.For<ITweetRepository>();
             repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" }, new TweetEntity() { Text = "123" } });
-            var guid = Substitute.For<IGuid>();
+            var guid = Substitute.For<IGuidService>();
             var service = new TweetService(dateTime, logger, threadService, repo, guid);
             service.TweetReceived(new TweetDto() { AuthorId = "Id", Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });
             service.TweetReceived(new TweetDto() { AuthorId = "Id", Text = "Text", CreatedOn = new DateTime(2022, 11, 06, 00, 00, 00) });

@@ -2,7 +2,7 @@
 
 namespace FrameworkAbstractions.Implementations
 {
-    public class GuidService : IGuid
+    public class GuidService : IGuidService
     {
         public Guid GetGuid()
         {

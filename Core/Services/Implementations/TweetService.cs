@@ -41,13 +41,13 @@ namespace Core.Services.Implementations
         private ILogger<TweetService> Log { get; }
         private IThreadingService ThreadService { get; }
         private ITweetRepository TweetRepo { get; }
-        private IGuid GuidService { get; }
+        private IGuidService GuidService { get; }
 
         private CancellationTokenSource LoggingTaskCancelSource { get; set; }
         private CancellationToken LoggingToken { get; set; }
 
         public TweetService(IDateTimeService dateTimeService, ILogger<TweetService> logger, IThreadingService threadingService, 
-                            ITweetRepository tweetRepository, IGuid guidService)
+                            ITweetRepository tweetRepository, IGuidService guidService)
         {
             DateTimeService = dateTimeService;
             Log = logger;

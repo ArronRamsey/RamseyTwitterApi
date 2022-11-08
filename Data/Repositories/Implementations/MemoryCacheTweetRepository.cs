@@ -6,11 +6,11 @@ namespace Data.Repositories.Implementations
 {
     public class MemoryCacheTweetRepository : ITweetRepository
     {
-        private ICache MemoryCache { get; }
+        private ICacheService MemoryCache { get; }
 
         private string CacheKey = "ABCD1234_AllTweets";
 
-        public MemoryCacheTweetRepository(ICache cache)
+        public MemoryCacheTweetRepository(ICacheService cache)
         {
             MemoryCache = cache;
         }

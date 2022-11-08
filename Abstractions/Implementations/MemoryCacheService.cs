@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace FrameworkAbstractions.Implementations
 {
-    public class MemoryCacheService : ICache
+    public class MemoryCacheService : ICacheService
     {
         private IMemoryCache MemoryCache { get; set; }
         

@@ -1,6 +1,6 @@
 ﻿namespace FrameworkAbstractions.Interfaces
 {
-    public interface IGuid
+    public interface IGuidService
     {
         Guid GetGuid();
     }
