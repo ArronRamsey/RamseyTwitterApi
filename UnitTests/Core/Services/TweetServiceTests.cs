@@ -5,7 +5,7 @@ using NSubstitute;
 using UnitTests;
 using Core.Dtos;
 using Data.Repositories.Interfaces;
-using Data.Entities;
+using Entities;
 using Tweetinvi.Core.Models;
 using System.Text;
 

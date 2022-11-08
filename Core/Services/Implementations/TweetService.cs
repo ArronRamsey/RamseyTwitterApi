@@ -2,7 +2,7 @@
 using Core.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using Data.Repositories.Interfaces;
-using Data.Entities;
+using Entities;
 using System.Text;
 
 namespace Core.Services.Implementations

@@ -1,4 +1,4 @@
-﻿using Data.Entities;
+﻿using Entities;
 using Data.Repositories.Implementations;
 
 namespace UnitTests.Repositories

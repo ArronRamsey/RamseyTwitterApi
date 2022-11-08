@@ -1,4 +1,4 @@
-﻿using Data.Entities;
+﻿using Entities;
 
 namespace Data.Repositories.Interfaces
 {
