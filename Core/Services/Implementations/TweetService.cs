@@ -10,33 +10,8 @@ namespace Core.Services.Implementations
 {
     public class TweetService : ITweetService
     {
-        public Dictionary<string, int> TagStats { get; set; } = new Dictionary<string, int>();
         
-        public TweetStatisticsDto Statistics
-        {
-            get
-            {
-                return new TweetStatisticsDto() { TweetsPerMinute = TweetsPerMinute, TweetsReceived = TweetCount };
-            }
-        }
-
-        public int TweetCount
-        {
-            get
-            {
-                return GetTweets().Count();
-            }
-        }
-
-        public double TweetsPerMinute
-        {
-            get
-            {
-                return GetTweetsPerMinute();
-            }
-        }
-        private DateTime? StartDate { get; set; }
-
+        
         private IDateTimeService DateTimeService { get; }
         private ILogger<TweetService> Log { get; }
         private IThreadingService ThreadService { get; }
@@ -58,38 +33,9 @@ namespace Core.Services.Implementations
             GuidService = guidService;
         }
 
-        public double GetTweetsPerMinute()
-        {
-            if (StartDate == null)
-            {
-                return 0;
-            }
-            return GetTweets().Count() / DateTimeService.Now().Subtract(Convert.ToDateTime(StartDate)).TotalMinutes;
-        }
-
         public void TweetReceived(TweetDto dto)
         {
-            if (StartDate == null)
-            {
-                StartDate = DateTimeService.Now();
-            }
             SaveTweet(dto);
-            UpdateTagStats(dto);
-        }
-
-        private void UpdateTagStats(TweetDto dto)
-        {
-            foreach(var tag in dto.HashTags)
-            {
-                if(TagStats.ContainsKey(tag))
-                {
-                    TagStats[tag] += 1;
-                }
-                else
-                {
-                    TagStats.Add(tag, 1);
-                }
-            }
         }
 
         public void StartWriteLogAsync()
@@ -113,33 +59,20 @@ namespace Core.Services.Implementations
         {
             while (!LoggingToken.IsCancellationRequested)
             {
-                var lastTweet = TweetRepo.GetLastTweet();
-                var sb = new StringBuilder();
-                sb.AppendLine($"Tweet Count: {TweetCount}");
-                sb.AppendLine($"Tweets Per Minute: {TweetsPerMinute}");
-                sb.AppendLine($"Last Text: {lastTweet.Text}");
-                sb.AppendLine($"Last Author: {lastTweet.Author}");
-                sb.AppendLine($"HashTags: {string.Join(",", lastTweet.Tags.Select(x => x.Text).ToList())}");
-                sb.AppendLine();
-                sb.AppendLine(GetStats());
-                Log.LogWarning(sb.ToString());
-                ThreadService.Sleep(2000);
+                //var lastTweet = TweetRepo.GetLastTweet();
+                //var sb = new StringBuilder();
+                //sb.AppendLine($"Tweet Count: {TweetCount}");
+                //sb.AppendLine($"Tweets Per Minute: {TweetsPerMinute}");
+                //sb.AppendLine($"Last Text: {lastTweet.Text}");
+                //sb.AppendLine($"Last Author: {lastTweet.Author}");
+                //sb.AppendLine($"HashTags: {string.Join(",", lastTweet.Tags.Select(x => x.Text).ToList())}");
+                //sb.AppendLine();
+                //sb.AppendLine(GetStats());
+                //Log.LogWarning(sb.ToString());
+                //ThreadService.Sleep(2000);
             }
         }
 
-        public string GetStats()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine("HashTag Top 10:");
-            var i = 1;
-            foreach (var stat in TagStats.OrderByDescending(x => x.Value).Take(10).ToList())
-            {
-                sb.AppendLine($"Place: {i}.  Used: {stat.Value}.  Tag: {stat.Key}");
-                i ++;
-            }
-            return sb.ToString();
-        }
-        
         private IEnumerable<TweetEntity> GetTweets()
         {
             return TweetRepo.GetAll();
