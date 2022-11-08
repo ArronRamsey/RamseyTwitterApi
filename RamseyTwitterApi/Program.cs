@@ -30,6 +30,7 @@ builder.Services.AddSingleton<ITweetRepository, TweetRepository>();
 builder.Services.AddSingleton<IThreadingService, ThreadingService>();
 builder.Services.AddSingleton<ICache, MemoryCacheService>();
 builder.Services.AddSingleton<ITweetService, TweetService>();
+builder.Services.AddSingleton<IGuid, GuidService>();
 builder.Services.AddHostedService<TwitterStreamHostedService>();
 builder.Services.AddHostedService<TweetLoggerHostedService>();
 
