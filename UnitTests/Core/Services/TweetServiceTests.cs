@@ -4,7 +4,7 @@ using UnitTests;
 using Core.Dtos;
 using Data.Repositories.Interfaces;
 using Entities;
-using Abstractions.Interfaces;
+using FrameworkAbstractions.Interfaces;
 
 namespace Tests.Core.Services
 {

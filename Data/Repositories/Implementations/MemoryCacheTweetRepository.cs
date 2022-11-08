@@ -1,4 +1,4 @@
-﻿using Abstractions.Interfaces;
+﻿using FrameworkAbstractions.Interfaces;
 using Data.Repositories.Interfaces;
 using Entities;
 

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Data.Repositories.Interfaces;
 using Entities;
 using System.Text;
-using Abstractions.Interfaces;
+using FrameworkAbstractions.Interfaces;
 
 namespace Core.Services.Implementations
 {

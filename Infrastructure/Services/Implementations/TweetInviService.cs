@@ -1,4 +1,4 @@
-﻿using Abstractions.Interfaces;
+﻿using FrameworkAbstractions.Interfaces;
 using Core.Dtos;
 using Core.Services.Interfaces;
 using Infrastructure.Services.Interfaces;

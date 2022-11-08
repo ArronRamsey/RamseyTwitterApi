@@ -1,7 +1,7 @@
-﻿using Abstractions.Interfaces;
+﻿using FrameworkAbstractions.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Infrastructure.Services.Implementations
+namespace FrameworkAbstractions.Implementations
 {
     public class MemoryCacheService : ICache
     {

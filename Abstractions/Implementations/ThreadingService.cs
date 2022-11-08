@@ -1,6 +1,6 @@
-﻿using Abstractions.Interfaces;
+﻿using FrameworkAbstractions.Interfaces;
 
-namespace Core.Services.Implementations
+namespace FrameworkAbstractions.Implementations
 {
     public class ThreadingService : IThreadingService
     {

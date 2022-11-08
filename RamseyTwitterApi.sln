@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{F2570FE9-4CF5-4F0A-8C4F-6D0626D03AF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{8DD42C8A-1C7E-4ABA-A763-BF1DFECCE69E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{8DD42C8A-1C7E-4ABA-A763-BF1DFECCE69E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstractions", "Abstractions\Abstractions.csproj", "{5C37C237-E5C5-422C-BAB1-E8512E9BEEA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrameworkAbstractions", "Abstractions\FrameworkAbstractions.csproj", "{5C37C237-E5C5-422C-BAB1-E8512E9BEEA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

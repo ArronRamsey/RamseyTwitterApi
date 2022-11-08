@@ -1,4 +1,4 @@
-﻿namespace Abstractions.Interfaces
+﻿namespace FrameworkAbstractions.Interfaces
 {
     public interface IDateTimeService
     {

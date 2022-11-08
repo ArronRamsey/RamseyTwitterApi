@@ -1,6 +1,6 @@
-﻿using Abstractions.Interfaces;
+﻿using FrameworkAbstractions.Interfaces;
 
-namespace Abstractions.Implementations
+namespace FrameworkAbstractions.Implementations
 {
     public class DateTimeService : IDateTimeService
     {

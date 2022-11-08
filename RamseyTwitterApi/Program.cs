@@ -1,5 +1,5 @@
-using Abstractions.Implementations;
-using Abstractions.Interfaces;
+using FrameworkAbstractions.Implementations;
+using FrameworkAbstractions.Interfaces;
 using Core;
 using Core.Services.Implementations;
 using Core.Services.Interfaces;
