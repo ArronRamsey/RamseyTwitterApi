@@ -11,8 +11,13 @@ namespace Infrastructure.Services.Implementations
             var start = DateTime.Now;
             while ((DateTime.Now - start).TotalSeconds < 180)
             {
-                TweetReceived?.Invoke(new Core.Dtos.TweetDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), DateTime.Now));
-                Thread.Sleep(500);
+                TweetReceived?.Invoke(new Core.Dtos.TweetDto()
+                {
+                    AuthorId = Guid.NewGuid().ToString(),
+                    CreatedOn = DateTime.Now,
+                    Text = Guid.NewGuid().ToString(),
+                    HashTags = new List<string>() {"H1", "H2" }
+                });
             }
         }
 

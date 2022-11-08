@@ -44,7 +44,16 @@ namespace Infrastructure.Services.Implementations
             var sampledStream = new TwitterClient(credentials).StreamsV2.CreateSampleStream();
             sampledStream.TweetReceived += (sender, eventArgs) =>
             {
-                TweetReceived?.Invoke(new TweetDto(eventArgs.Tweet.Text, eventArgs.Tweet.AuthorId, DateService.Now()));
+                TweetReceived?.Invoke(new TweetDto()
+                {
+                    AuthorId = eventArgs.Tweet.AuthorId,
+                    CreatedOn = DateService.Now(),
+                    Text = eventArgs.Tweet.Text,
+                    HashTags = eventArgs.Tweet.Entities.Hashtags == null ? 
+                               new List<string>() :
+                               eventArgs.Tweet.Entities.Hashtags.Select(x => x.Tag).ToList()
+
+                });; 
             };
             return sampledStream;
         }
