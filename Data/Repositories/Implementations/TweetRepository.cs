@@ -14,7 +14,7 @@ namespace Data.Repositories.Implementations
 
         public TweetEntity GetLastTweet()
         {
-            return TweetEntities.OrderByDescending(x => x.CreatedOn).First();
+            return TweetEntities.OrderByDescending(x => x.CreatedOn).DefaultIfEmpty(new TweetEntity()).First();
         }
 
         public void SaveTweet(TweetEntity tweet)

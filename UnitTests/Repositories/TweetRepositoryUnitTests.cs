@@ -19,7 +19,7 @@ namespace UnitTests.Repositories
         }
 
         [TestMethod]
-        public void LastTweet()
+        public void GetLastTweet_HasData()
         {
             var repo = new TweetRepository();
             repo.SaveTweet(new TweetEntity() { Author = "Author1", Text = "Text1", Id = 1, CreatedOn = new DateTime(2022, 11, 07, 00, 00, 00) });
@@ -28,6 +28,14 @@ namespace UnitTests.Repositories
             repo.SaveTweet(new TweetEntity() { Author = "Author4", Text = "Text4", Id = 4, CreatedOn = new DateTime(2022, 11, 07, 00, 00, 01) });
             var lastTweet = repo.GetLastTweet();
             Assert.AreEqual(4, lastTweet.Id);
+        }
+
+        [TestMethod]
+        public void LastTweet_EmptyCollection_IdReturnIsZero()
+        {
+            var repo = new TweetRepository();
+            var lastTweet = repo.GetLastTweet();
+            Assert.AreEqual(0, lastTweet.Id);
         }
 
     }
