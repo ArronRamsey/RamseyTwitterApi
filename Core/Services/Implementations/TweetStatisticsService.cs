@@ -6,43 +6,32 @@ namespace Core.Services.Implementations
 {
     public class TweetStatisticsService : ITweetStatisticsService
     {
-        public int TweetCount
-        {
-            get
-            {
-                return _TweetCount;
-            }
-        }
-
-        private int _TweetCount { get; set; }  
-
-        public double TweetsPerMinute
-        {
-            get
-            {
-                if (StartDate == null)
-                {
-                    return 0;
-                }
-                return TweetCount / DateTimeService.Now().Subtract(Convert.ToDateTime(StartDate)).TotalMinutes;
-            }
-        }
-
-        public TweetStatisticsDto Statistics
-        {
-            get
-            {
-                return new TweetStatisticsDto() { TweetsPerMinute = TweetsPerMinute, TweetsReceived = _TweetCount };
-            }
-        }
-
+        private int _TweetCount { get; set; }
         private DateTime? StartDate { get; set; }
-
         private IDateTimeService DateTimeService { get; }
-
+        
         public TweetStatisticsService(IDateTimeService dateTimeService)
         {
             DateTimeService = dateTimeService;
+        }
+
+        public int GetTweetCount()
+        {
+            return _TweetCount;
+        }
+
+        public double GetTweetsPerMinute()
+        {
+            if (StartDate == null)
+            {
+                return 0;
+            }
+            return _TweetCount / DateTimeService.Now().Subtract(Convert.ToDateTime(StartDate)).TotalMinutes;
+        }
+
+        public TweetStatisticsDto GetStatistics()
+        {
+            return new TweetStatisticsDto() { TweetsPerMinute = GetTweetsPerMinute(), TweetsReceived = _TweetCount };
         }
 
         public void TweetReceived()

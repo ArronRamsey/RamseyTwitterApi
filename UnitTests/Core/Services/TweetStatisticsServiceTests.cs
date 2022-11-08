@@ -13,7 +13,7 @@ namespace UnitTests.Core.Services
         {
             var dateService = Substitute.For<IDateTimeService>();
             var service = new TweetStatisticsService(dateService);
-            Assert.AreEqual(0, service.TweetsPerMinute);
+            Assert.AreEqual(0, service.GetTweetsPerMinute());
         }
 
         [TestMethod]
@@ -22,7 +22,7 @@ namespace UnitTests.Core.Services
             var dateService = Substitute.For<IDateTimeService>();
             var service = new TweetStatisticsService(dateService);
             service.TweetReceived();
-            Assert.AreEqual(1, service.TweetCount);
+            Assert.AreEqual(1, service.GetTweetCount());
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace UnitTests.Core.Services
             service.TweetReceived();
             service.TweetReceived();
             service.TweetReceived();
-            Assert.AreEqual(1.5, service.TweetsPerMinute);
+            Assert.AreEqual(1.5, service.GetTweetsPerMinute());
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace UnitTests.Core.Services
             service.TweetReceived();
             service.TweetReceived();
             var expectedStats = new TweetStatisticsDto() { TweetsPerMinute = 1.5, TweetsReceived = 3 };
-            Assert.AreEqual(expectedStats, service.Statistics);
+            Assert.AreEqual(expectedStats, service.GetStatistics());
         }
 
     }
