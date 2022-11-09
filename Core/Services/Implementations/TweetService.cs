@@ -38,7 +38,8 @@ namespace Core.Services.Implementations
 
         public TweetEntity GetLastTweet()
         {
-            return TweetRepo.GetLastTweet();
+            var tweet = TweetRepo.GetLastTweet();
+            return tweet == null ? new TweetEntity() : tweet;
         }
 
     }
