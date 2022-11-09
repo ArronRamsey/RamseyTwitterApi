@@ -16,7 +16,7 @@ namespace Tests.Core.Services
         {
             var repo = Substitute.For<ITweetRepository>();
             var guid = Substitute.For<IGuidService>();
-            guid.GetGuid().Returns(new Guid("16114e50-411f-48d3-89f7-8292898e7741"), 
+            guid.GetGuid().Returns(new Guid("16114e50-411f-48d3-89f7-8292898e7741"),
                                    new Guid("26114e50-411f-48d3-89f7-8292898e7741"),
                                    new Guid("36114e50-411f-48d3-89f7-8292898e7741"));
             repo.GetAll().Returns(new List<TweetEntity>() { new TweetEntity() { Text = "123" } });
@@ -38,14 +38,24 @@ namespace Tests.Core.Services
         }
 
         [TestMethod]
-        public void GetLastTweet()
+        public void GetLastTweet_NotNull()
+        {
+            var repo = Substitute.For<ITweetRepository>();
+            repo.GetLastTweet().Returns(new TweetEntity() { Id = "1" });
+            var guid = Substitute.For<IGuidService>();
+            var service = new TweetService(repo, guid);
+            var entity = service.GetLastTweet();
+            Assert.AreEqual("1", entity.Id);
+        }
+
+        [TestMethod]
+        public void GetLastTweet_NullRepo_InstantiatedEntityReturned()
         {
             var repo = Substitute.For<ITweetRepository>();
             var guid = Substitute.For<IGuidService>();
             var service = new TweetService(repo, guid);
-            service.GetLastTweet();
-            repo.Received().GetLastTweet();
-
+            var entity = service.GetLastTweet();
+            Assert.AreEqual("", entity.Id);
         }
 
         private TweetDto GetTestDto()

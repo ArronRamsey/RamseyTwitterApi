@@ -127,5 +127,12 @@ namespace UnitTests.Core.Dtos
             Assert.AreEqual(dto1, dto2);
         }
 
+        [TestMethod]
+        public void HashtagsNotNullOnInstantiation()
+        {
+            var dto1 = new TweetDto();
+            Assert.IsNotNull(dto1.HashTags);
+        }
+
     }
 }

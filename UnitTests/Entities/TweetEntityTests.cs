@@ -43,6 +43,13 @@ namespace UnitTests.Entities
             Assert.AreEqual(tweet1, tweet2);
         }
 
+        [TestMethod]
+        public void TagsPropertyNotNull()
+        {
+            var tweet1 = new TweetEntity();
+            Assert.IsNotNull(tweet1.Tags);
+        }
+
         private TweetEntity GetTweet()
         {
             return new TweetEntity()
