@@ -1,6 +1,6 @@
 ﻿namespace Core.Dtos
 {
-    public class TweetStatisticsDto : IEquatable<TweetStatisticsDto?>
+    public class TweetStatisticsDto
     {
         public int TweetsReceived { get; set; }
         public double TweetsPerMinute { get; set; }
